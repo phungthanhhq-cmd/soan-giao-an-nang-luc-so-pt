@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "InviteLink": {
+      "title": "InviteLink",
+      "description": "A customized access link that binds to the first Google account that clicks it.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the link."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the link was created."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User ID/Email of the administrator who created the link."
+        },
+        "boundToEmail": {
+          "type": "string",
+          "description": "The Google email address bound to this link after the first login."
+        },
+        "boundAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the email address was bound to this link."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "revoked"],
+          "description": "Whether the link is currently active or revoked."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional notes/display name for whom this link was shared with."
+        }
+      },
+      "required": ["id", "createdAt", "createdBy", "status"]
+    }
+  },
+  "firestore": {
+    "/invite_links/{linkId}": {
+      "schema": "InviteLink",
+      "description": "Stores access token information, used to regulate single-user access via Google Sign-In."
+    }
+  }
+}

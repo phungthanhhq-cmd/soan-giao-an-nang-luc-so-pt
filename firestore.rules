@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    function isAdmin(authObj) {
+      return authObj != null && 
+             authObj.token.email_verified == true && 
+             authObj.token.email == "phungthanhhq@gmail.com";
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidInviteLink(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.createdAt is timestamp &&
+             data.createdBy is string && data.createdBy.size() <= 128 &&
+             data.status is string && (data.status == 'active' || data.status == 'revoked') &&
+             (!('boundToEmail' in data) || data.boundToEmail is string && data.boundToEmail.size() <= 128) &&
+             (!('boundAt' in data) || data.boundAt is timestamp) &&
+             (!('description' in data) || data.description is string && data.description.size() <= 256);
+    }
+
+    // Default deny rule
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Rules for Invite Links
+    match /invite_links/{linkId} {
+      allow get: if isSignedIn() && isValidId(linkId) && (resource == null || existing().status == 'active' || isAdmin(request.auth));
+      allow list: if isSignedIn() && isAdmin(request.auth);
+      allow create: if isSignedIn() && isAdmin(request.auth) && isValidId(linkId) && isValidInviteLink(incoming()) && incoming().createdAt == request.time;
+      allow delete: if isSignedIn() && isAdmin(request.auth) && isValidId(linkId);
+      
+      allow update: if isSignedIn() && isValidId(linkId) && (
+        // Admin update
+        (isAdmin(request.auth) && isValidInviteLink(incoming())) ||
+        
+        // Single User self-binding update
+        (
+          isEmailVerified() &&
+          existing().status == 'active' &&
+          (!('boundToEmail' in existing()) || existing().boundToEmail == null || existing().boundToEmail == "") &&
+          isValidInviteLink(incoming()) &&
+          incoming().boundToEmail == request.auth.token.email &&
+          incoming().boundAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['boundToEmail', 'boundAt'])
+        )
+      );
+    }
+  }
+}

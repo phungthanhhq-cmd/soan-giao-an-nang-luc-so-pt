@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* NLS Highlight styles */
+nls {
+  color: #ef4444 !important; /* text-red-500 equivalent */
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Also override <u> specifically for NLS context if needed, 
+   but since we told AI to use <nls>, this is a backup */
+u {
+  color: #ef4444;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Ensure react-markdown rendered nls tags are styled */
+.prose nls {
+  color: #ef4444 !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.prose u {
+  color: #ef4444 !important;
+  text-decoration: none;
+}

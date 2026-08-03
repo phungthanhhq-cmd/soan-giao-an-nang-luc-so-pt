@@ -1,0 +1,8 @@
+{
+  "name": "Remix AI SOẠN SOẠN GIÁO ÁN TÍCH HỢP NLS-PT",
+  "description": "AI-powered assistant for teachers to integrate Digital Competence (NLS) standards into lesson plans automatically.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
