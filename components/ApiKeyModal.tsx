@@ -105,7 +105,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
                 type="text"
                 value={inputKey}
                 onChange={(e) => setInputKey(e.target.value)}
-                placeholder="Dán API Key (ví dụ: AIzaSy... hoặc AQ...)"
+                placeholder="Dán Gemini API Key của bạn (ví dụ: AIzaSy... hoặc AQ...)"
                 className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none text-slate-800"
               />
               {inputKey.trim() && (
@@ -119,6 +119,12 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
                 </button>
               )}
             </div>
+            {inputKey.trim() && (inputKey.trim().startsWith('AIzaSy') || inputKey.trim().startsWith('AQ')) && (
+              <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-[11px] text-emerald-800 flex items-center gap-1.5 font-medium">
+                <ShieldCheck size={15} className="text-emerald-600 shrink-0" />
+                <span>Định dạng API Key Gemini hợp lệ (Chuẩn Google AI Studio).</span>
+              </div>
+            )}
             <p className="text-[11px] text-slate-500 flex items-center gap-1 pt-1">
               <Info size={13} className="text-indigo-500 shrink-0" />
               API Key được lưu an toàn trên trình duyệt của bạn — bạn chỉ cần nhập 1 lần để sử dụng vĩnh viễn (không thời hạn).
