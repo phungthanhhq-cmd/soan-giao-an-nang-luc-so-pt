@@ -121,7 +121,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
             </div>
             <p className="text-[11px] text-slate-500 flex items-center gap-1 pt-1">
               <Info size={13} className="text-indigo-500 shrink-0" />
-              API Key được lưu an toàn riêng biệt trên trình duyệt thiết bị của bạn.
+              API Key được lưu an toàn trên trình duyệt của bạn — bạn chỉ cần nhập 1 lần để sử dụng vĩnh viễn (không thời hạn).
             </p>
           </div>
 

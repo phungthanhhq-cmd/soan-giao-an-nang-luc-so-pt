@@ -35,10 +35,16 @@ const Header: React.FC<HeaderProps> = ({ onOpenApiKeyModal, apiKeySet }) => {
             <span className="text-blue-200 text-xs">⚙️</span>
           </button>
 
-          <div className="px-4 py-2 bg-blue-700/60 text-blue-100 rounded-xl font-medium text-xs sm:text-sm flex items-center space-x-2 border border-blue-500/40 select-none">
+          <a
+            href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-blue-700/60 hover:bg-blue-700 text-blue-100 hover:text-white rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-2 border border-blue-500/40 transition-all shadow-xs active:scale-95 cursor-pointer"
+            title="Bấm để mở trang tạo API Key Gemini riêng miễn phí từ Google"
+          >
             <span>📖</span>
-            <span>Powered by Gemini</span>
-          </div>
+            <span>Lấy API ở đây</span>
+          </a>
         </div>
       </div>
     </header>
